@@ -5,14 +5,18 @@ import { LoadingController } from 'ionic-angular';
 import { HomePage } from '../home/home';
 import { ResetPage } from '../reset/reset';
 import { TabsPage } from '../tabs/tabs';
+import { Http } from '@angular/http';
+import { ToastController } from 'ionic-angular';
+
 @Component({
     selector: 'page-login',
     templateUrl: 'login.html'
 })
 export class LoginPage {
     public email: string;
-    constructor(public navCtrl: NavController, public loadingCtrl: LoadingController, public navParams: NavParams) {
-        this.email = "Jane.Doe@email.com"
+    public password: string;
+    constructor(public navCtrl: NavController, public toastCtrl: ToastController, public loadingCtrl: LoadingController, public navParams: NavParams, public http: Http) {
+
     }
 
     navigateHome() {
@@ -33,6 +37,24 @@ export class LoginPage {
             duration: 500
         });
         loader.present();
-        this.navigateToTabs();
+        this.http
+            .post("http://localhost:3000/login", {
+                email: this.email,
+                password: this.password
+            })
+            .subscribe(
+                result => {
+                    console.log(result);
+                    this.navCtrl.push(TabsPage, result)
+                },
+                error => {
+                    console.log(error);
+                    let toast = this.toastCtrl.create({
+                        message: 'Invalid email and password combination.',
+                        duration: 2000
+                      });
+                      toast.present();
+                }
+            );
     }
 }
