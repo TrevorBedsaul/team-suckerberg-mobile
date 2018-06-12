@@ -5,12 +5,9 @@ export class User {
 
     }
 
+    id: number;
     firstName: string;
-    surName: string;
-    username: string;
+    lastName: string;
+    email: string;
     password: string;
-    charities: Array<Charity>;
-    portfolio: Array<number>;
-    transactionHistory: Array<Payment>;
-
 }
