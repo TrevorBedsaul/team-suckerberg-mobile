@@ -1,13 +1,11 @@
-import { Charity } from '../models/charity';
-import { Payment } from '../models/payment';
 export class User {
     constructor() {
 
     }
 
     id: number;
-    firstName: string;
-    lastName: string;
+    firstname: string;
+    lastname: string;
     email: string;
     password: string;
 }

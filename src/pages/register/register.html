@@ -12,7 +12,14 @@
     </p>
 
     <ion-list>
-
+        <ion-item>
+            <ion-label floating>First Name</ion-label>
+            <ion-input [(ngModel)] = "firstname" type="firstname"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label floating>Last Name</ion-label>
+            <ion-input [(ngModel)] = "lastname" type="lastname"></ion-input>
+        </ion-item>
         <ion-item>
             <ion-label floating>Email</ion-label>
             <ion-input [(ngModel)] = "email" type="email"></ion-input>
@@ -23,10 +30,10 @@
         </ion-item>
         <ion-item>
             <ion-label floating>Confirm Password</ion-label>
-            <ion-input type="password"></ion-input>
+            <ion-input [(ngModel)] = "confirm_password" type="password"></ion-input>
         </ion-item>
         <p>
-            <button  icon-left ion-button full (click)="navigateToLogin()">
+            <button  icon-left ion-button full (click)="presentLoading()">
                 <ion-icon name="log-in"></ion-icon>Create Account and Login
             </button>
         </p>
