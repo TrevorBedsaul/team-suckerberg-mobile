@@ -15,15 +15,35 @@
             <canvas #doughnutCanvas></canvas>
         </ion-card-content>
     </ion-card>
+    <ion-list no-lines>
+        <ion-item *ngFor="let portfolio of charities">
+            <ion-list-header>{{charity.name}}</ion-list-header>
+            <ion-range min="0" max="100-{{total}}" step="1" snaps="true" pin="true">
+                <ion-label range-left>0%</ion-label>
+                <ion-label range-right>{{total}}%</ion-label>
+            </ion-range>
+        </ion-item>
+    </ion-list>
     <h4>Account Plan</h4>
     <p>
         Your current monthly payment is
-        <b>$100.00</b> every month.
+        <b>${{monthly}}</b> every month.
     </p>
-    <h4>Payment Method</h4>
+    <ion-list>
+        <ion-list-header>
+            Change Amount
+        </ion-list-header>
+        <ion-item>
+            <ion-range min="50" max="500" step="50" snaps="true" pin="true" [(ngModel)]="monthly">
+                <ion-label range-left>$50</ion-label>
+                <ion-label range-right>$500</ion-label>
+            </ion-range>
+        </ion-item>
+    </ion-list>
+    <!-- <h4>Payment Method</h4>
     <p>
-        Your current payment method is: 
-    </p>
+        Your current payment method is:
+    </p> -->
     <h4>Account History</h4>
     <p>
         Last transaction was on

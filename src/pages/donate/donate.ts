@@ -4,6 +4,9 @@ import { ToastController } from 'ionic-angular';
 import { NavParams } from 'ionic-angular'
 import { LoadingController } from 'ionic-angular';
 import { Charity } from '../../models/charity';
+import { Http } from '@angular/http';
+import { Donation } from '../../models/donation';
+
 declare var Stripe;
 
 @Component({
@@ -13,9 +16,11 @@ declare var Stripe;
 export class DonatePage {
     public charity: Charity;
     public amount: number;
+    public user_id: number;
+    public charity_id: number;
     stripe = Stripe('pk_test_eYCX11dIxALec8Sqz2JpIfip');
     card: any;
-    constructor(public navCtrl: NavController, public loadingCtrl: LoadingController, public navParams: NavParams, public toastCtrl: ToastController) {
+    constructor(public navCtrl: NavController, public loadingCtrl: LoadingController, public navParams: NavParams, public http: Http, public toastCtrl: ToastController) {
         this.charity = this.navParams.get("charity");
     }
 
@@ -57,8 +62,8 @@ export class DonatePage {
         form.addEventListener('submit', event => {
             event.preventDefault();
 
-            // this.stripe.createToken(this.card)
-            this.stripe.createSource(this.card).then(result => {
+            // this.stripe.createSource(this.card)
+            this.stripe.createToken(this.card).then(result => {
                 if (result.error) {
                     var errorElement = document.getElementById('card-errors');
                     errorElement.textContent = result.error.message;
@@ -75,7 +80,26 @@ export class DonatePage {
             duration: 500
         });
         loader.present();
-        this.sendDonation();
+        this.http
+            .post("http://localhost:3000/donation", {
+                amount: this.amount,
+                user_id:this.user_id,
+                charity_id: this.charity_id 
+            })
+            .subscribe(
+                result => {
+                    console.log(result);
+                    this.sendDonation();
+                },
+                error => {
+                    console.log(error);
+                    let toast = this.toastCtrl.create({
+                        message: 'Invalid email and password combination.',
+                        duration: 2000
+                    });
+                    toast.present();
+                }
+            );
     }
 
     sendDonation() {

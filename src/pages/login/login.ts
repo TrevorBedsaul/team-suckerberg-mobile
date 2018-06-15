@@ -8,6 +8,7 @@ import { TabsPage } from '../tabs/tabs';
 import { Http } from '@angular/http';
 import { ToastController } from 'ionic-angular';
 
+
 @Component({
     selector: 'page-login',
     templateUrl: 'login.html'
@@ -45,7 +46,12 @@ export class LoginPage {
             .subscribe(
                 result => {
                     console.log(result);
-                    this.navCtrl.push(TabsPage, result)
+                    var responseJson = result.json();
+                    //this.storage.set('token', responseJson.token);
+                    console.log("jwt: ", responseJson.token);
+                    this.navCtrl.push(TabsPage, {
+                        token: responseJson.token
+                    });
                 },
                 error => {
                     console.log(error);

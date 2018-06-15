@@ -17,6 +17,7 @@ import { BrowsePage } from '../pages/browse/browse';
 import { TabsPage } from '../pages/tabs/tabs';
 import { CharityPage } from '../pages/charity_page/charity_page';
 import { DonatePage } from '../pages/donate/donate';
+import { Storage } from '@ionic/storage';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,7 @@ import { DonatePage } from '../pages/donate/donate';
   imports: [
     BrowserModule,
     HttpModule,
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(MyApp),
   ],
   bootstrap: [IonicApp],
   entryComponents: [

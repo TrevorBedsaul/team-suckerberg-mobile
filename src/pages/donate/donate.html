@@ -7,7 +7,7 @@
 </ion-header>
 
 <ion-content padding>
-    <ion-list no-lines>
+    <!-- <ion-list no-lines>
         <ion-item>
             <ion-label>Amount $</ion-label>
             <ion-input placeholder="10.00" type="usd" [(ngModel)]="amount"></ion-input>
@@ -15,19 +15,21 @@
     </ion-list>
     <button ion-button center (click)= "submittingPayment()">
         Donate To {{charity.name}}
-    </button>
+    </button> -->
+    <ion-label>Amount $</ion-label>
+    <ion-input placeholder="10.00" type="usd" [(ngModel)]="amount"></ion-input>
     <form action="/" method="post" id="payment-form">
-    
+
         <div class="form-row">
-          <div id="card-element">
-            <!-- a Stripe Element will be inserted here. -->
-          </div>
-    
-          <!-- Used to display Element errors -->
-          <div id="card-errors" role="alert"></div>
+            <div id="card-element">
+                <!-- a Stripe Element will be inserted here. -->
+            </div>
+
+            <!-- Used to display Element errors -->
+            <div id="card-errors" role="alert"></div>
         </div>
-    
-      <button ion-button block large>Add Card</button>
-        
-      </form>
+
+        <button ion-button center>Donate {{amount}} to {{charity.name}}</button>
+
+    </form>
 </ion-content>
