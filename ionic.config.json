@@ -1,6 +1,6 @@
 {
   "name": "golden",
-  "app_id": "",
+  "app_id": "c0b125ce",
   "type": "ionic-angular",
   "integrations": {
     "cordova": {}
