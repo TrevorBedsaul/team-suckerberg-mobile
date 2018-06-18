@@ -5,7 +5,7 @@ import { ExplorePage } from '../explore/explore';
 import { ProfilePage } from '../profile/profile';
 import { BrowsePage } from '../browse/browse';
 import { AccountPage } from '../account/account';
-import { HttpErrors } from '@loopback/rest';
+
 
 @Component({
     selector: 'page-tabs',
@@ -23,17 +23,12 @@ export class TabsPage {
     tab2: any;
     tab3: any;
     tab4: any;
-    private token: string;
 
     constructor(public navCtrl: NavController, public navParams: NavParams) {
         this.tab1 = ExplorePage;
         this.tab2 = BrowsePage;
         this.tab3 = AccountPage;
         this.tab4 = ProfilePage;
-        this.token = this.navParams.get("token");
-        // if(!this.token) {
-        //     throw new HttpErrors.Unauthorized('Invalid Token');
-        // }
     }
 
 }

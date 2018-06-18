@@ -1,4 +1,4 @@
-import { Component, ViewChild, NgModule } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { Chart } from 'chart.js';
 import { Charity } from '../../models/charity';
@@ -20,34 +20,34 @@ export class AccountPage {
   @ViewChild('doughnutCanvas') doughnutCanvas;
   doughnutChart: any;
 
-  constructor(public navCtrl: NavController, public http: Http) {
-    // storage.get('token').then((val) => {
-    //   this.token = val;
-    //   this.http
-    //     .get("http://localhost:3000/users", {
-    //       params: {
-    //         token: this.token
-    //       }
-    //     })
-    //     .subscribe(
-    //       result => {
-    //         this.user_id = result.json().user_id;
-    //       },
-    //       error => {
-    //         console.log(error);
-    //       }
-    //     );
-    // });
-    // this.http
-    //   .get("http://localhost:3000/portfolio/{{this.user_id}}")
-    //   .subscribe(
-    //     result => {
-
-    //     },
-    //     error => {
-    //       console.log(error);
-    //     }
-    //   );
+  constructor(public navCtrl: NavController, public http: Http, public storage: Storage) {
+    storage.get('token').then((val) => {
+      this.token = val;
+      this.http
+        .get("http://localhost:3000/users", {
+          params: {
+            token: this.token
+          }
+        })
+        .subscribe(
+          result => {
+            this.user_id = result.json().user_id;
+          },
+          error => {
+            console.log(error);
+          }
+        );
+    });
+    this.http
+      .get("http://localhost:3000/portfolio/{{this.user_id}}")
+      .subscribe(
+        result => {
+          console.log(result);
+        },
+        error => {
+          console.log(error);
+        }
+      );
   }
 
   ionViewDidLoad() {

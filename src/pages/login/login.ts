@@ -7,7 +7,7 @@ import { ResetPage } from '../reset/reset';
 import { TabsPage } from '../tabs/tabs';
 import { Http } from '@angular/http';
 import { ToastController } from 'ionic-angular';
-
+import { Storage } from '@ionic/storage';
 
 @Component({
     selector: 'page-login',
@@ -16,7 +16,7 @@ import { ToastController } from 'ionic-angular';
 export class LoginPage {
     public email: string;
     public password: string;
-    constructor(public navCtrl: NavController, public toastCtrl: ToastController, public loadingCtrl: LoadingController, public navParams: NavParams, public http: Http) {
+    constructor(public storage: Storage, public navCtrl: NavController, public toastCtrl: ToastController, public loadingCtrl: LoadingController, public navParams: NavParams, public http: Http) {
 
     }
 
@@ -47,7 +47,7 @@ export class LoginPage {
                 result => {
                     console.log(result);
                     var responseJson = result.json();
-                    //this.storage.set('token', responseJson.token);
+                    this.storage.set('token', responseJson.token);
                     console.log("jwt: ", responseJson.token);
                     this.navCtrl.push(TabsPage, {
                         token: responseJson.token

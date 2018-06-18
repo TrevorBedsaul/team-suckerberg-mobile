@@ -5,7 +5,6 @@ import { Http } from '@angular/http';
 import { ToastController } from 'ionic-angular';
 import { LoadingController } from 'ionic-angular';
 import { User } from '../../models/user';
-import * as Stripe from 'stripe';
 
 @Component({
   selector: 'page-register',
@@ -22,15 +21,7 @@ export class RegisterPage {
 
   }
 
-  async addStripe() {
-    var stripe = require('stripe')('pk_test_eYCX11dIxALec8Sqz2JpIfip');
-
-    var customer = await stripe.customers.create(
-      { email: 'customer@example.com' }
-    );
-  }
-
-  async presentLoading() {
+  async register() {
     let loader = this.loadingCtrl.create({
       content: "Registering. Please wait...",
       duration: 500
@@ -59,4 +50,14 @@ export class RegisterPage {
         }
       );
   }
+
+  checkPassword(){
+    if(this.password!=this.confirm_password){
+      alert('Passwords do not match');
+    }
+    else{
+      this.register();
+    }
+  }
+
 }

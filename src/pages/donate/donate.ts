@@ -5,7 +5,6 @@ import { NavParams } from 'ionic-angular'
 import { LoadingController } from 'ionic-angular';
 import { Charity } from '../../models/charity';
 import { Http } from '@angular/http';
-import { Donation } from '../../models/donation';
 
 declare var Stripe;
 
@@ -62,8 +61,27 @@ export class DonatePage {
         form.addEventListener('submit', event => {
             event.preventDefault();
 
-            // this.stripe.createSource(this.card)
-            this.stripe.createToken(this.card).then(result => {
+            this.stripe.createToken(this.card)
+                .then((response) => {
+                    this.http
+                        .post("http://localhost:3000/stripepayment", response.token)
+
+                        .subscribe(
+                            result => {
+                                localStorage.setItem("charge", result.json().charge);
+                            },
+
+                            error => {
+                                console.log(error);
+                            }
+                        );
+                    console.log(response.token);
+                })
+                .catch((error) => {
+                    console.error(error)
+                });
+
+            this.stripe.createSource(this.card).then(result => {
                 if (result.error) {
                     var errorElement = document.getElementById('card-errors');
                     errorElement.textContent = result.error.message;
@@ -82,9 +100,9 @@ export class DonatePage {
         loader.present();
         this.http
             .post("http://localhost:3000/donation", {
+                user_id: this.user_id,
                 amount: this.amount,
-                user_id:this.user_id,
-                charity_id: this.charity_id 
+                charity_id: this.charity_id
             })
             .subscribe(
                 result => {
@@ -92,9 +110,10 @@ export class DonatePage {
                     this.sendDonation();
                 },
                 error => {
+
                     console.log(error);
                     let toast = this.toastCtrl.create({
-                        message: 'Invalid email and password combination.',
+                        message: 'Error occured while processing payment.',
                         duration: 2000
                     });
                     toast.present();

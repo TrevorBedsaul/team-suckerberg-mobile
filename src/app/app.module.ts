@@ -17,7 +17,7 @@ import { BrowsePage } from '../pages/browse/browse';
 import { TabsPage } from '../pages/tabs/tabs';
 import { CharityPage } from '../pages/charity_page/charity_page';
 import { DonatePage } from '../pages/donate/donate';
-import { Storage } from '@ionic/storage';
+import { IonicStorageModule } from '@ionic/storage';
 
 @NgModule({
   declarations: [
@@ -38,6 +38,7 @@ import { Storage } from '@ionic/storage';
     BrowserModule,
     HttpModule,
     IonicModule.forRoot(MyApp),
+    IonicStorageModule.forRoot()
   ],
   bootstrap: [IonicApp],
   entryComponents: [
