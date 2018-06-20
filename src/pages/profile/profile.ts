@@ -29,8 +29,8 @@ export class ProfilePage {
                 })
                 .subscribe(
                     result => {
-                        this.first = result.json().firstname;
-                        this.last = result.json().lastname;
+                        this.first = result.json()[0].firstname;
+                        this.last = result.json()[0].lastname;
                         this.name = this.first + " " + this.last;
                     },
                     error => {
@@ -42,6 +42,11 @@ export class ProfilePage {
 
     navigateToHome() {
         this.app.getRootNav().setRoot(HomePage);
+    }
+
+    logout() {
+        this.storage.remove('token');
+        this.navigateToHome();
     }
 
     saveChanges() {
