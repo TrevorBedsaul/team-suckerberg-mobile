@@ -17,6 +17,7 @@ export class ProfilePage {
     first: string;
     last: string;
     token: string;
+    about_me: string;
 
     constructor(public http: Http, public navCtrl: NavController, public navParams: NavParams, private app: App, public toastCtrl: ToastController, private storage: Storage) {
         storage.get('token').then((val) => {
@@ -32,6 +33,7 @@ export class ProfilePage {
                         this.first = result.json()[0].firstname;
                         this.last = result.json()[0].lastname;
                         this.name = this.first + " " + this.last;
+                        this.about_me = result.json()[0].about_me;
                     },
                     error => {
                         console.log(error);

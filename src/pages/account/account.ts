@@ -14,6 +14,7 @@ export class AccountPage {
   public monthly: number;
   public total: number;
   public charities: Array<Charity> = [];
+  public percentages: Array<number> = [];
   public token: string;
   public user_id: number;
 
@@ -39,10 +40,14 @@ export class AccountPage {
         );
     });
     this.http
-      .get("http://localhost:3000/portfolio/{{this.user_id}}")
+      .get("http://localhost:3000/portfolio/" + this.user_id)
       .subscribe(
         result => {
-          console.log(result);
+          console.log(result.json());
+          this.charities = result.json();
+          for(var i = 0; i < this.charities.length; i++) {
+            this.percentages.push(100/this.charities.length);
+          }
         },
         error => {
           console.log(error);
@@ -50,15 +55,40 @@ export class AccountPage {
       );
   }
 
+  // ionViewDidLoad() {
+  //   this.doughnutChart = new Chart(this.doughnutCanvas.nativeElement, {
+
+  //     type: 'doughnut',
+  //     data: {
+  //       labels: ["Habitat For Humanity", "Relay For Life", "Unicef"],
+  //       datasets: [{
+  //         label: 'Percentage of Monthly Pay',
+  //         data: [35, 55, 20],
+  //         backgroundColor: [
+  //           'rgba(255, 0, 0, 0.2)',
+  //           'rgba(0, 0, 255, 0.2)',
+  //           'rgba(0, 255, 0, 0.2)'
+  //         ],
+  //         hoverBackgroundColor: [
+  //           "#FF6384",
+  //           "#36A2EB",
+  //           "#FFCE56",
+  //         ]
+  //       }]
+  //     }
+
+  //   })
+  // }
+
   ionViewDidLoad() {
     this.doughnutChart = new Chart(this.doughnutCanvas.nativeElement, {
 
       type: 'doughnut',
       data: {
-        labels: ["Habitat For Humanity", "Relay For Life", "Unicef"],
+        labels: this.charities,
         datasets: [{
           label: 'Percentage of Monthly Pay',
-          data: [35, 55, 20],
+          data: this.percentages,
           backgroundColor: [
             'rgba(255, 0, 0, 0.2)',
             'rgba(0, 0, 255, 0.2)',

@@ -5,6 +5,8 @@ import { NavParams } from 'ionic-angular'
 import { LoadingController } from 'ionic-angular';
 import { Charity } from '../../models/charity';
 import { Http } from '@angular/http';
+import { Storage } from '@ionic/storage'; 
+import { User } from '../../models/user';
 
 declare var Stripe;
 
@@ -16,11 +18,33 @@ export class DonatePage {
     public charity: Charity;
     public amount: number;
     public user_id: number;
+    public user = new User();
     public charity_id: number;
+    public token: string;
     stripe = Stripe('pk_test_eYCX11dIxALec8Sqz2JpIfip');
     card: any;
-    constructor(public navCtrl: NavController, public loadingCtrl: LoadingController, public navParams: NavParams, public http: Http, public toastCtrl: ToastController) {
+    constructor(public navCtrl: NavController, public loadingCtrl: LoadingController, public navParams: NavParams, public http: Http, public toastCtrl: ToastController, public storage: Storage) {
         this.charity = this.navParams.get("charity");
+        storage.get('token').then((val) => {
+            this.token = val;
+            this.http
+                .get("http://localhost:3000/user/token", {
+                    params: {
+                        token: this.token
+                    }
+                })
+                .subscribe(
+                    result => {
+                        // this.user_id = result.json().user.user_id;
+                        let test = result.json().user;
+                        this.user = test;
+                        this.user_id = this.user.id;
+                    },
+                    error => {
+                        console.log(error);
+                    }
+                );
+        });
     }
 
     ionViewDidLoad() {
@@ -69,6 +93,7 @@ export class DonatePage {
                         .subscribe(
                             result => {
                                 localStorage.setItem("charge", result.json().charge);
+                                console.log(result.json());
                             },
 
                             error => {
@@ -93,6 +118,7 @@ export class DonatePage {
     }
 
     submittingPayment() {
+        this.charity_id = this.charity.id;
         let loader = this.loadingCtrl.create({
             content: "Submitting payment...",
             duration: 500
@@ -110,7 +136,6 @@ export class DonatePage {
                     this.sendDonation();
                 },
                 error => {
-
                     console.log(error);
                     let toast = this.toastCtrl.create({
                         message: 'Error occured while processing payment.',

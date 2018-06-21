@@ -41,7 +41,7 @@ export class LoginPage {
         this.http
             .post("http://localhost:3000/login", {
                 email: this.email,
-                password: this.password
+                password: this.password,
             })
             .subscribe(
                 result => {

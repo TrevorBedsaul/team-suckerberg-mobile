@@ -25,6 +25,7 @@ export class CharityPage {
         });
         loader.present();
         this.addedToPortfolio();
+        
     }
 
     openingPaymentPortal(charity: Charity) {
