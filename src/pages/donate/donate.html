@@ -18,10 +18,14 @@
     </button> -->
     <ion-list>
         <ion-item>
+            <img src="https://housing.az.gov/sites/default/files/Accept-Credit-Card-Payments.png" class = "responsive">
+        </ion-item>
+        <ion-item>
             <ion-label>Amount $</ion-label>
             <ion-input placeholder="10.00" type="usd" [(ngModel)]="amount"></ion-input>
         </ion-item>
     </ion-list>
+    <p></p>
     <form action="/" method="post" id="payment-form">
 
         <div class="form-row">
@@ -34,5 +38,6 @@
         </div>
 
     </form>
+    <p></p>
     <button ion-button center full padding (click)=submittingPayment()>Donate ${{amount}} to {{charity.name}}</button>
 </ion-content>

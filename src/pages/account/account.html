@@ -16,13 +16,13 @@
         </ion-card-content>
     </ion-card>
     <ion-list no-lines>
-        <ion-item *ngFor="let portfolio of charities">
-            <ion-list-header>{{charity.name}}</ion-list-header>
-            <ion-range min="0" max="100-{{total}}" step="1" snaps="true" pin="true">
-                <ion-label range-left>0%</ion-label>
-                <ion-label range-right>{{total}}%</ion-label>
+        <ion-item *ngFor="let charity of abbreviated;let index = index;">
+            <ion-range min="0" max="100" step="1" snaps="true" pin="true" [(ngModel)]="percentages[index]">
+                <ion-label range-left>{{abbreviated[index]}}</ion-label>
+                <ion-label range-right>100%</ion-label>
             </ion-range>
         </ion-item>
+        <button ion-button (click)="ionViewDidLoad()">Update Portfolio</button>
     </ion-list>
     <h4>Account Plan</h4>
     <p>
@@ -40,14 +40,20 @@
             </ion-range>
         </ion-item>
     </ion-list>
+    <p>
+        This means your donation amounts based on your updated portfolio above will be:
+    </p>
+    <ion-list>
+        <ion-item *ngFor="let charity of charities; let index = index">
+            => ${{payments[index]}} to {{charity.name}}
+        </ion-item>
+    </ion-list>
     <!-- <h4>Payment Method</h4>
     <p>
         Your current payment method is:
     </p> -->
     <h4>Account History</h4>
-    <p>
-        Last transaction was on
-        <i>May 15th</i> at
-        <i>5:23pm</i> for $100.00 based off the portfolio above.
+    <p *ngFor="let donation of donations; let index = index;">
+        ${{donation.amount}} donated to {{donation_charities[index+1]}} 
     </p>
 </ion-content>
